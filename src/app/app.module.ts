@@ -4,17 +4,21 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { TimeTableComponent } from './time-table/time-table.component';
 import { HeaderComponent } from './header/header.component';
-import { SearchbarComponent } from './searchbar/searchbar.component';
+import { SearchBarComponent } from './searchbar/searchbar.component';
+import { AngularMaterialModule } from './angular-mat.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     TimeTableComponent,
     HeaderComponent,
-    SearchbarComponent
+    SearchBarComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AngularMaterialModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
