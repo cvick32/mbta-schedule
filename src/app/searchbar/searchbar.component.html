@@ -1,1 +1,11 @@
-<p>searchbar works!</p>
+<form (submit)='onSearchStation(stationForm)' #stationForm='ngForm'>
+  <mat-form-field>
+      <input
+        matInput
+        name="station"
+        ngModel
+        placeholder='Search an Address'
+        required>
+  </mat-form-field>
+  <button mat-raised-button color="accent" type="submit">Search</button>
+</form>

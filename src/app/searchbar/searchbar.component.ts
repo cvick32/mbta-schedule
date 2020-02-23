@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { SearchService } from '../search.service';
 
 @Component({
-  selector: 'app-searchbar',
+  selector: 'app-search',
   templateUrl: './searchbar.component.html',
   styleUrls: ['./searchbar.component.css']
 })
-export class SearchbarComponent implements OnInit {
+export class SearchBarComponent {
 
-  constructor() { }
+  constructor(public searchService: SearchService) {}
 
-  ngOnInit(): void {
+  onSearchStation(form: NgForm) {
+    this.searchService.searchStation(form.value.station);
   }
-
 }
