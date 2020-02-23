@@ -1,1 +1,6 @@
-<p>time-table works!</p>
+<table mat-table [dataSource]="station.schedule">
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+  </ng-container>
+</table>
