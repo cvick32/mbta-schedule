@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, scheduled } from 'rxjs';
 import { Station } from './station.model';
 
 /**
@@ -16,7 +16,9 @@ export class SearchService {
   station: Station;
   stationUpdated = new Subject<{station: Station}>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.searchStation('North Station'); // start at North Station
+  }
 
   /**
    * Given a station, retrieve the current time
@@ -25,8 +27,11 @@ export class SearchService {
   searchStation(station: string) {
     const api_call = `${this.api_url}=${station}`;
     this.http.get(api_call).subscribe((response: any) => {
-      console.log(response);
-      this.station = response.results;
+      this.station = {
+        name: station,
+        arrivals: response.data.filter(schedule => schedule.attributes.arrival_time),
+        departures: response.data.filter(schedule => schedule.attributes.departure_time)
+      };
       this.stationUpdated.next({station: this.station});
     });
   }
