@@ -4,6 +4,15 @@ table {
   margin-right:auto;
   color: goldenrod;
 }
+.radio {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.radio-div {
+  margin-left: 47%;
+
+}
 
 h1 {
   text-align: center;
