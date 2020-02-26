@@ -1,16 +1,22 @@
-<h1 class="mat-display-1">{{ station.name }}</h1>
-<mat-radio-group aria-label="Select a Schedule" [(ngModel)]="scheduleString" (change)="changeSchedule()">
-  <mat-radio-button value="dept">Departures</mat-radio-button>
-  <mat-radio-button value="arri">Arrivals</mat-radio-button>
-</mat-radio-group>
-<table mat-table [dataSource]="currentSchedule">
+<h1 class="mat-display-1" *ngIf="station.arrivals.length != 0 && station.departures.length != 0">Showing Schedule for {{ station.name }}</h1>
+<h1 class="mat-display-1" *ngIf="station.arrivals.length === 0 && station.departures.length === 0">No Schedule found for {{ station.name }}</h1>
+
+<div class="radio-div">
+  <mat-radio-group class="radio" aria-label="Select a Schedule" [(ngModel)]="scheduleString" (change)="changeSchedule()" *ngIf="station.arrivals.length != 0 && station.departures.length != 0">
+    <mat-radio-button value="dept">Departures</mat-radio-button>
+    <mat-radio-button value="arri">Arrivals</mat-radio-button>
+  </mat-radio-group>
+</div>
+
+
+<table mat-table [dataSource]="currentSchedule" *ngIf="station.arrivals.length != 0 && station.departures.length != 0">
 
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
   <!-- Departure Date Column -->
   <ng-container matColumnDef="date" *ngIf="scheduleString === 'dept'">
-    <th mat-header-cell *matHeaderCellDef> Date </th>
+    <th mat-header-cell *matHeaderCellDef> Departure Date </th>
     <td mat-cell *matCellDef="let departure">{{departure.attributes.departure_time.split('T')[0]}} </td>
   </ng-container>
 
@@ -30,7 +36,7 @@
 
   <!-- Arrival Time Column -->
   <ng-container matColumnDef="time" *ngIf="scheduleString === 'arri'">
-    <th mat-header-cell *matHeaderCellDef> Departure Time </th>
+    <th mat-header-cell *matHeaderCellDef> Arrival Time </th>
     <td mat-cell *matCellDef="let departure">
       {{departure.attributes.arrival_time.split('T')[1].split('-')[0]}}
     </td>
