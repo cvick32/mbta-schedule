@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SearchService } from '../search.service';
 import { Subscription, BehaviorSubject } from 'rxjs';
 import { Station } from '../station.model';
@@ -9,19 +9,30 @@ import { Station } from '../station.model';
   styleUrls: ['./time-table.component.css']
 })
 export class TimeTableComponent implements OnInit {
-
+  displayedColumns: string[] = ['date', 'time', 'destination', 'status'];
   station: Station;
-  currentStationUpdate: BehaviorSubject<Station>;
+  currentStationUpdate = new BehaviorSubject<Station>(this.station);
+  scheduleString = 'dept';
+  currentSchedule;
   private stationSub: Subscription;
 
-  constructor(public searchService: SearchService) { }
+  constructor(public searchService: SearchService, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.station = this.searchService.getStation();
     this.stationSub = this.searchService.getStationSubscription()
       .subscribe((stationData: {station: Station}) => {
         this.station = stationData.station;
+        this.changeDetectorRef.detectChanges();
         this.currentStationUpdate.next(this.station);
       });
+  }
+
+  changeSchedule() {
+    if (this.scheduleString === 'arri') {
+      this.currentSchedule = this.station.arrivals;
+    } else {
+      this.currentSchedule = this.station.departures;
+    }
   }
 }
