@@ -23,6 +23,7 @@ export class TimeTableComponent implements OnInit {
     this.stationSub = this.searchService.getStationSubscription()
       .subscribe((stationData: {station: Station}) => {
         this.station = stationData.station;
+        this.changeSchedule();
         this.changeDetectorRef.detectChanges();
         this.currentStationUpdate.next(this.station);
       });
