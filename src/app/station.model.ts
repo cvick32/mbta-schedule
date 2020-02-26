@@ -1,4 +1,5 @@
 export interface Station {
   name: string;
-  schedule: string[];
+  arrivals: [];
+  departures: [];
 }
